@@ -15,6 +15,12 @@ class TestFactory {
 
 	}
 
+	private function addPassedTest() {
+	}
+
+	private function addFailedTest($msg) {
+	}
+
 	public function __construct() {
 	}
 
@@ -32,6 +38,11 @@ class TestFactory {
 	}
 
 	public function EXPECT_TRUE($statement, $errorMessage) {
+		if($statement) {
+			$this->addPassedTest();
+		} else {
+			$this->addFailedTest($errorMessage);
+		}
 	}
 
 	public function EXPECT_FALSE($statement, $errorMessage) {
