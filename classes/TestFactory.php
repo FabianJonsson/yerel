@@ -5,7 +5,7 @@ class PassedTest {
 	}
 
 	public function show() {
-		print "Passed<br>\n";
+		print "<tr><td class=\"passed\">&nbsp;</td><td></td></tr>\n";
 	}
 }
 
@@ -18,7 +18,19 @@ class FailedTest {
 	}
 
 	public function show() {
-		print "Failed with error message: ".$this->msg."<br>\n";
+		print "<tr><td class=\"failed\">&nbsp;</td><td>".$this->msg."</td></tr>\n";
+	}
+}
+
+class TestSection {
+	private $title;
+
+	public function __construct($title) {
+		$this->title = $title;
+	}
+
+	public function show() {
+		print "<tr><th colspan=\"2\">".$this->title."</th></tr>\n";
 	}
 }
 
@@ -47,11 +59,19 @@ class TestFactory {
 	}
 
 	private function displayResults() {
+
+		print "<LINK type=\"text/css\" rel=\"stylesheet\" href=\"css/TestFactory.css\">\n";
+
+		print "<table>\n";
+
 		if(count($this->testResults) >= 1) {
 			foreach($this->testResults as $result) {
 				$result->show();
 			}
 		}
+
+		print "</table>\n";
+
 	}
 
 	public function __construct() {
@@ -70,6 +90,10 @@ class TestFactory {
 
 		$this->displayResults();
 
+	}
+
+	public function addNewSection($title) {
+		$this->testResults[] = new TestSection($title);
 	}
 
 	public function EXPECT_TRUE($statement, $errorMessage) {
